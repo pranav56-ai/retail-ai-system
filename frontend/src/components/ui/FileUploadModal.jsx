@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { 
-  FileSpreadsheet, Upload, FileText, CheckCircle2, 
-  AlertTriangle, Download, X, ArrowRight, Loader2, Sparkles 
+import {
+  FileSpreadsheet, Upload, FileText, CheckCircle2,
+  AlertTriangle, Download, X, ArrowRight, Loader2, Sparkles
 } from 'lucide-react';
 import { Dialog, DialogHeader, DialogBody, DialogFooter } from './Dialog';
 import { Button } from './Button';
 import { Badge } from './Badge';
 import api from '../../api';
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://retail-ai-system-3kqt.onrender.com/api';
 
 export function FileUploadModal({
   open,
@@ -85,7 +87,7 @@ export function FileUploadModal({
   };
 
   const handleDownloadTemplate = (format = 'csv') => {
-    const url = `http://localhost:8000/api/inventory/sample-template?format=${format}`;
+    const url = `${API_BASE}/inventory/sample-template?format=${format}`;
     window.open(url, '_blank');
   };
 
@@ -189,7 +191,7 @@ export function FileUploadModal({
               </div>
 
               <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                {selectedFile 
+                {selectedFile
                   ? `${(selectedFile.size / 1024).toFixed(1)} KB • Ready for processing`
                   : 'Supports .xlsx, .xls, .csv files up to 10MB'}
               </div>
