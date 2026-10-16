@@ -19,13 +19,13 @@ export function AuthScreen({ onLoginSuccess, theme = 'dark', onToggleTheme }) {
     setLoading(true);
 
     try {
-      const endpoint = isRegister ? '/auth/register' : '/auth/login';
-      const payload = isRegister 
+      const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+      const payload = isRegister
         ? { store_name: form.store_name.trim(), email: form.email.trim(), password: form.password }
         : { email: form.email.trim(), password: form.password };
 
       const res = await api.post(endpoint, payload);
-      
+
       localStorage.setItem('retail_token', res.data.token);
       localStorage.setItem('store_name', res.data.store_name);
       onLoginSuccess(res.data.token, res.data.store_name);
