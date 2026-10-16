@@ -19,7 +19,8 @@ export function AuthScreen({ onLoginSuccess, theme = 'dark', onToggleTheme }) {
     setLoading(true);
 
     try {
-      const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+      // Stripped duplicate '/api' prefix so Axios resolves against baseURL correctly
+      const endpoint = isRegister ? '/auth/register' : '/auth/login';
       const payload = isRegister
         ? { store_name: form.store_name.trim(), email: form.email.trim(), password: form.password }
         : { email: form.email.trim(), password: form.password };
