@@ -1,0 +1,451 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Dark Slate Neumorphic Palette (Default) */
+  --bg-app: #121620;
+  --bg-surface: #181d2a;
+  --bg-card: #1b202e;
+  --bg-card-raised: #1f2536;
+  --bg-card-hover: #22293c;
+  --bg-sunken: #0f131c;
+  --bg-input: #10141e;
+  --bg-pill: #161b27;
+
+  /* Shadows for Raised / Embossed Neumorphic Elements */
+  --shadow-raised: 8px 8px 18px #0a0c12, -7px -7px 16px #242c3f;
+  --shadow-raised-sm: 4px 4px 10px #0a0c12, -4px -4px 10px #242c3f;
+  --shadow-raised-xs: 2px 2px 6px #0a0c12, -2px -2px 6px #242c3f;
+  --shadow-raised-lg: 14px 14px 30px #080a0f, -10px -10px 24px #263044;
+  --shadow-raised-float: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 10px 10px 25px #0a0c12, -8px -8px 20px #242c3f;
+  
+  /* Inset / Sunken Shadows for Wells, Inputs, Active States */
+  --shadow-sunken: inset 4px 4px 9px #0a0c12, inset -4px -4px 9px #242c3f;
+  --shadow-sunken-sm: inset 2px 2px 5px #0a0c12, inset -2px -2px 5px #242c3f;
+  --shadow-sunken-deep: inset 6px 6px 14px #080a0f, inset -5px -5px 12px #222a3d;
+  --shadow-pressed: inset 4px 4px 8px #080a0f, inset -3px -3px 7px #222a3d;
+
+  /* Glowing Accent Shadows */
+  --shadow-glow-blue: 0 0 22px rgba(59, 130, 246, 0.4), 6px 6px 14px #0a0c12, -5px -5px 12px #242c3f;
+  --shadow-glow-emerald: 0 0 22px rgba(16, 185, 129, 0.4), 6px 6px 14px #0a0c12, -5px -5px 12px #242c3f;
+  --shadow-glow-rose: 0 0 22px rgba(244, 63, 94, 0.4), 6px 6px 14px #0a0c12, -5px -5px 12px #242c3f;
+  --shadow-glow-amber: 0 0 22px rgba(245, 158, 11, 0.4), 6px 6px 14px #0a0c12, -5px -5px 12px #242c3f;
+
+  /* Borders and Highlight Edges */
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.05);
+  --border-light: 1px solid rgba(255, 255, 255, 0.08);
+  --border-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --border-focus: #3b82f6;
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-faint: #475569;
+
+  /* Accent Vibrancy */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-foreground: #ffffff;
+  --primary-light: rgba(59, 130, 246, 0.15);
+
+  --accent-emerald: #10b981;
+  --accent-emerald-light: rgba(16, 185, 129, 0.15);
+  --accent-amber: #f59e0b;
+  --accent-amber-light: rgba(245, 158, 11, 0.15);
+  --accent-rose: #f43f5e;
+  --accent-rose-light: rgba(244, 63, 94, 0.15);
+  --accent-cyan: #06b6d4;
+  --accent-cyan-light: rgba(6, 182, 212, 0.15);
+  --accent-purple: #8b5cf6;
+  --accent-purple-light: rgba(139, 92, 246, 0.15);
+
+  /* shadcn / Modern Border Radii */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transition timings */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Mode Neumorphic Alternate Palette */
+[data-theme="light"] {
+  --bg-app: #e2e8f0;
+  --bg-surface: #edf2f7;
+  --bg-card: #e6ecf4;
+  --bg-card-raised: #ebf1f8;
+  --bg-card-hover: #f1f6fc;
+  --bg-sunken: #d8e0eb;
+  --bg-input: #dce4ee;
+  --bg-pill: #e0e7f1;
+
+  --shadow-raised: 7px 7px 16px #beccd9, -7px -7px 16px #ffffff;
+  --shadow-raised-sm: 4px 4px 10px #beccd9, -4px -4px 10px #ffffff;
+  --shadow-raised-xs: 2px 2px 6px #c4d1de, -2px -2px 6px #ffffff;
+  --shadow-raised-lg: 14px 14px 28px #b6c4d2, -10px -10px 24px #ffffff;
+  --shadow-raised-float: 0 20px 40px -15px rgba(100, 116, 139, 0.35), 8px 8px 20px #beccd9, -8px -8px 20px #ffffff;
+
+  --shadow-sunken: inset 4px 4px 8px #beccd9, inset -4px -4px 8px #ffffff;
+  --shadow-sunken-sm: inset 2px 2px 5px #beccd9, inset -2px -2px 5px #ffffff;
+  --shadow-sunken-deep: inset 6px 6px 12px #b6c4d2, inset -5px -5px 10px #ffffff;
+  --shadow-pressed: inset 4px 4px 8px #beccd9, inset -3px -3px 7px #ffffff;
+
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.35), 5px 5px 12px #beccd9, -5px -5px 12px #ffffff;
+  --shadow-glow-emerald: 0 0 20px rgba(16, 185, 129, 0.35), 5px 5px 12px #beccd9, -5px -5px 12px #ffffff;
+  --shadow-glow-rose: 0 0 20px rgba(244, 63, 94, 0.35), 5px 5px 12px #beccd9, -5px -5px 12px #ffffff;
+  --shadow-glow-amber: 0 0 20px rgba(245, 158, 11, 0.35), 5px 5px 12px #beccd9, -5px -5px 12px #ffffff;
+
+  --border-subtle: 1px solid rgba(0, 0, 0, 0.05);
+  --border-light: 1px solid rgba(255, 255, 255, 0.7);
+  --border-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+
+  --primary-light: rgba(59, 130, 246, 0.12);
+  --accent-emerald-light: rgba(16, 185, 129, 0.12);
+  --accent-amber-light: rgba(245, 158, 11, 0.12);
+  --accent-rose-light: rgba(244, 63, 94, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+code, pre, .mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ------------------------------------------------------------- */
+/* Custom Neumorphic Scrollbars                                  */
+/* ------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+  box-shadow: var(--shadow-sunken-sm);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card-raised);
+  box-shadow: var(--shadow-raised-xs);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-card-hover);
+}
+
+/* ------------------------------------------------------------- */
+/* Neumorphic Surface Helper Classes                             */
+/* ------------------------------------------------------------- */
+.neu-raised {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-raised);
+  border: var(--border-subtle);
+}
+
+.neu-raised-sm {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-raised-sm);
+  border: var(--border-subtle);
+}
+
+.neu-raised-lg {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-raised-lg);
+  border: var(--border-subtle);
+}
+
+.neu-sunken {
+  background: var(--bg-sunken);
+  box-shadow: var(--shadow-sunken);
+  border: var(--border-subtle);
+}
+
+.neu-sunken-sm {
+  background: var(--bg-sunken);
+  box-shadow: var(--shadow-sunken-sm);
+}
+
+.neu-pressed {
+  box-shadow: var(--shadow-pressed) !important;
+  transform: translateY(1px);
+}
+
+.neu-pill {
+  background: var(--bg-pill);
+  box-shadow: var(--shadow-raised-sm);
+  border-radius: var(--radius-full);
+}
+
+.neu-pill-sunken {
+  background: var(--bg-sunken);
+  box-shadow: var(--shadow-sunken-sm);
+  border-radius: var(--radius-full);
+}
+
+.neu-interactive {
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neu-interactive:hover {
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-raised-sm);
+  transform: translateY(-1px);
+}
+
+.neu-interactive:active {
+  background: var(--bg-sunken);
+  box-shadow: var(--shadow-pressed);
+  transform: translateY(1px);
+}
+
+/* Focus and Active Outlines */
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-blue) !important;
+  border-color: var(--primary) !important;
+}
+
+/* ------------------------------------------------------------- */
+/* Keyframe Animations & Micro-Interactions                      */
+/* ------------------------------------------------------------- */
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px #10b981;
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+    box-shadow: 0 0 4px #10b981;
+  }
+}
+
+.live-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-emerald);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes scanline {
+  0% { top: 0%; opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { top: 96%; opacity: 0.8; }
+}
+
+.scanline-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #10b981, #34d399, transparent);
+  box-shadow: 0 0 14px #10b981;
+  animation: scanline 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInScale 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Table Row Hover with Neumorphic subtle relief */
+.neu-table-row {
+  transition: background-color var(--transition-fast);
+}
+
+.neu-table-row:hover {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+/* Glass & Neumorphic Overlay */
+.neu-overlay {
+  background-color: rgba(10, 12, 18, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ------------------------------------------------------------- */
+/* Hover Tooltip & Anti-Overflow Utilities                       */
+/* ------------------------------------------------------------- */
+.line-clamp-1 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.line-clamp-2 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.line-clamp-3 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.sku-pill-box {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background-color: var(--bg-sunken);
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.sku-pill-box:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: var(--shadow-sunken-sm);
+  background-color: var(--bg-card-raised);
+}
+
+.hover-tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  cursor: default;
+}
+
+.hover-tooltip-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1a202c;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: normal;
+  min-width: 180px;
+  max-width: 320px;
+  width: max-content;
+  z-index: 99999;
+  pointer-events: none;
+  line-height: 1.4;
+  text-align: left;
+}
+
+[data-theme="light"] .hover-tooltip-popup {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.hover-tooltip-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1a202c transparent transparent transparent;
+}
+
+[data-theme="light"] .hover-tooltip-popup::after {
+  border-color: #ffffff transparent transparent transparent;
+}
+
+/* Category Filter Pill Scrolling */
+.category-pill-strip {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+.category-pill-strip::-webkit-scrollbar {
+  height: 4px;
+}
+
+.category-pill-strip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+/* Global Container Width Containment */
+main {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
