@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { TooltipText } from '../ui/Tooltip';
+import { CapitalShareDonut } from './CapitalShareDonut';
 
 export function CapitalAllocationView({ inventory, insights }) {
   const [marginFilter, setMarginFilter] = useState('All'); // 'All' | 'High' | 'Low'
@@ -25,11 +26,22 @@ export function CapitalAllocationView({ inventory, insights }) {
 
   const chartColors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#f43f5e', '#ec4899', '#6366f1'];
 
-  const categoryChartData = Object.entries(categoryMap).map(([name, value], idx) => ({
-    name,
-    value: Math.round(value),
-    color: chartColors[idx % chartColors.length],
-  }));
+  const categoryChartData = Object.entries(categoryMap)
+    .filter(([_, val]) => typeof val === 'number' && val > 0 && !isNaN(val))
+    .sort((a, b) => b[1] - a[1])
+    .map(([name, value], idx) => {
+      const roundedVal = Math.round(value);
+      const percentage = totalCostBasis > 0 ? ((roundedVal / totalCostBasis) * 100).toFixed(1) : '0.0';
+      return {
+        name,
+        category: name,
+        value: roundedVal,
+        rawValue: value,
+        percentage: parseFloat(percentage),
+        percentageStr: `${percentage}%`,
+        color: chartColors[idx % chartColors.length],
+      };
+    });
 
   const deadStock = insights?.dead_stock || [];
 
@@ -126,64 +138,10 @@ export function CapitalAllocationView({ inventory, insights }) {
         </Card>
 
         {/* Donut Allocation Visual */}
-        <Card variant="raised">
-          <CardHeader>
-            <CardTitle icon={PieIcon}>Capital Share Donut</CardTitle>
-            <Badge variant="sunken" size="sm">
-              % Portfolio
-            </Badge>
-          </CardHeader>
-          <CardContent>
-            <div style={{ height: '230px', width: '100%', position: 'relative' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={categoryChartData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={55}
-                    outerRadius={85}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {categoryChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} stroke="var(--bg-card)" strokeWidth={2} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'var(--bg-surface)', 
-                      borderRadius: '10px', 
-                      boxShadow: 'var(--shadow-raised-sm)', 
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      color: 'var(--text-primary)',
-                      fontSize: '12px'
-                    }}
-                    formatter={(val) => [`₹${val.toLocaleString()}`, 'Share']}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  pointerEvents: 'none',
-                }}
-              >
-                <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
-                  CATEGORIES
-                </span>
-                <span className="mono" style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                  {categoryChartData.length}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <CapitalShareDonut
+          data={categoryChartData}
+          totalCapital={totalCostBasis}
+        />
       </div>
 
       {/* SKU Margin Breakdown Deck */}
@@ -292,3 +250,5 @@ export function CapitalAllocationView({ inventory, insights }) {
     </div>
   );
 }
+
+export { CapitalShareDonut };
