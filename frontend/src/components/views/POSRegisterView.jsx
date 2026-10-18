@@ -11,6 +11,7 @@ import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { TooltipText } from '../ui/Tooltip';
 import { POSReceiptModal } from '../ui/POSReceiptModal';
+import { ProductGrid, ProductCard } from './ProductGrid';
 import api from '../../api';
 
 // Web Audio API Sound Feedback Helpers
@@ -522,133 +523,12 @@ export function POSRegisterView({
           })}
         </div>
 
-        {/* Product Fast-Touch Cards Grid */}
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))',
-            gap: '0.85rem',
-            paddingRight: '4px',
-          }}
-        >
-          {filteredInventory.map((prod) => {
-            const inCartItem = cart.find((it) => it.product_id === prod.id);
-            const isOutOfStock = prod.current_stock <= 0;
-            const isLowStock = prod.current_stock > 0 && prod.current_stock <= prod.min_stock_level;
-
-            return (
-              <div
-                key={prod.id}
-                onClick={() => !isOutOfStock && handleAddToCart(prod, 1)}
-                title={`${prod.name} (₹${prod.selling_price})`}
-                style={{
-                  backgroundColor: inCartItem ? 'rgba(59, 130, 246, 0.08)' : 'var(--bg-surface)',
-                  border: inCartItem
-                    ? '1.5px solid rgba(59, 130, 246, 0.5)'
-                    : '1px solid rgba(255, 255, 255, 0.05)',
-                  boxShadow: inCartItem ? 'var(--shadow-raised-sm)' : 'var(--shadow-raised-xs)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '0.85rem 0.95rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  gap: '0.75rem',
-                  cursor: isOutOfStock ? 'not-allowed' : 'pointer',
-                  opacity: isOutOfStock ? 0.45 : 1,
-                  position: 'relative',
-                  transition: 'all var(--transition-fast)',
-                  userSelect: 'none',
-                }}
-                className="neu-interactive"
-              >
-                {/* Active in-cart counter bubble */}
-                {inCartItem && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '6px',
-                      right: '6px',
-                      backgroundColor: 'var(--primary)',
-                      color: '#fff',
-                      borderRadius: 'var(--radius-full)',
-                      width: '22px',
-                      height: '22px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.72rem',
-                      fontWeight: 800,
-                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.35)',
-                    }}
-                  >
-                    {inCartItem.quantity}
-                  </div>
-                )}
-
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.35rem' }}>
-                    <span style={{ fontSize: '0.66rem', color: 'var(--text-faint)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.04em' }}>
-                      {prod.category || 'General'}
-                    </span>
-                  </div>
-
-                  <TooltipText
-                    text={prod.name}
-                    badge={prod.category}
-                    subtext={`Barcode: #${prod.barcode || 'N/A'} • Price: ₹${prod.selling_price.toFixed(2)} • Stock: ${prod.current_stock}`}
-                    lines={2}
-                    textStyle={{
-                      fontSize: '0.86rem',
-                      fontWeight: 700,
-                      color: 'var(--text-primary)',
-                      lineHeight: 1.35,
-                      minHeight: '2.45em',
-                      marginBottom: '0.25rem',
-                    }}
-                  />
-
-                  {prod.barcode && (
-                    <div className="mono" style={{ fontSize: '0.68rem', color: 'var(--text-muted)', lineHeight: 1.4, marginTop: '2px' }}>
-                      #{prod.barcode}
-                    </div>
-                  )}
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '0.35rem', paddingTop: '0.4rem', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
-                  <div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#34d399', lineHeight: 1.2 }} className="mono">
-                      ₹{prod.selling_price.toFixed(2)}
-                    </div>
-                    <div style={{ fontSize: '0.72rem', color: isOutOfStock ? '#f87171' : isLowStock ? '#f59e0b' : 'var(--text-muted)', fontWeight: 600, marginTop: '2px' }}>
-                      {isOutOfStock ? '0 in stock' : `${prod.current_stock} left`}
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    disabled={isOutOfStock}
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: 'var(--radius-xs)',
-                      backgroundColor: 'var(--bg-sunken)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--primary)',
-                      cursor: isOutOfStock ? 'not-allowed' : 'pointer',
-                    }}
-                  >
-                    <Plus size={15} />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Product Fast-Touch Cards Grid with Stacking Context Elevation */}
+        <ProductGrid
+          products={filteredInventory}
+          cart={cart}
+          onAddToCart={handleAddToCart}
+        />
       </div>
 
       {/* =========================================================================
